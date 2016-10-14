@@ -47,22 +47,31 @@ log('Starting program...');
 var token = location.hash.split('access_token=')[1].split('&')[0];
 log('Retreived token: ' + token);
 log('Send email...');
-$.post('https://outlook.office.com/api/v2.0/me/sendmail', {
-    Message: {
-        Subject: generate_text(subject_template),
-	Body: {
-	    ContentType: 'HTML',
-	    Content: generate_html(body_template)
-	},
-	ToRecipients: [{
-	    EmailAddress: {
-		Address: 'pierre.carpentier@mail.com'
-	    }
-	}]
+$.ajax(
+    url: 'https://outlook.office.com/api/v2.0/me/sendmail',
+    dataType: 'application/json',
+    data: {
+        Message: {
+            Subject: generate_text(subject_template),
+	    Body: {
+    	        ContentType: 'HTML',
+	        Content: generate_html(body_template)
+	    },
+	    ToRecipients: [{
+	        EmailAddress: {
+		    Address: 'pierre.carpentier@mail.com'
+	        }
+	    }]
+        },
+        SaveToSentItems: true
     },
-    SaveToSentItems: true    
-}, function(response) {
-    log('Got response: ' + response.status);
+    success: function(data, status) {
+        log('...success, got response: ' + status);
+    },
+    error: function(data, status) {
+        log('...error, got response: ' + status);
+    },
+    beforeSend: function(xhr, settings) { xhr.setRequestHeader('Authorization','Bearer ' + token); }
 });
        
        
