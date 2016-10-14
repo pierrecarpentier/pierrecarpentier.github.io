@@ -49,6 +49,7 @@ log('Retreived token: ' + token);
 log('Send email...');
 $.ajaxSetup({    
     beforeSend: function(request) {
+	log('...set authorization header...');
 	request.setRequestHeader('Authorization', 'Bearer ' + token);
     }
 });
