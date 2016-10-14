@@ -47,7 +47,7 @@ log('Starting program...');
 var token = location.hash.split('access_token=')[1].split('&')[0];
 log('Retreived token: ' + token);
 log('Send email...');
-$.ajax(
+$.ajax({
     url: 'https://outlook.office.com/api/v2.0/me/sendmail',
     dataType: 'application/json',
     data: {
