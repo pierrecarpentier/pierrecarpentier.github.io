@@ -67,8 +67,8 @@ $.post('https://outlook.office.com/api/v2.0/me/sendmail',
 	    }]
         },
         SaveToSentItems: true
-    }, function(data, status) {
-        log('...success, got response: ' + data.);
+    }, function(data, status, xhr) {
+        log('...' + status + ', got response: ' + xhr.status);
     }
 );
        
